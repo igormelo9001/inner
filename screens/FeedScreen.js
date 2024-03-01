@@ -27,7 +27,11 @@ const FeedScreen = ({ navigation }) => {
 
   const handlePostPress = () => {
     navigation.navigate('Post');
-  };
+  }; 
+
+  const navigateToUniverseGraph = () => {
+    navigation.navigate('Graph');
+};
 
   return (
     <View style={styles.container}>
@@ -38,7 +42,10 @@ const FeedScreen = ({ navigation }) => {
         contentContainerStyle={{ paddingBottom: 16 }}
       />
       <TouchableOpacity style={styles.newPostButton} onPress={handlePostPress}>
-          <Text style={styles.buttonText}>Nova Postagem</Text>
+          <Text style={styles.buttonPostText}>New Post</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.universeGraph} onPress={navigateToUniverseGraph}>
+          <Text style={styles.buttonGraphText}>Universe Graph</Text>
       </TouchableOpacity>
     </View>
   );
@@ -88,10 +95,35 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff', // Cor do texto do botão
+    alignContent:'center',
+    justifyContent:'center',
+    paddingLeft:100
+  },
+  buttonPostText:{
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff', // Cor do texto do botão
+    alignContent:'center',
+    justifyContent:'center',
+    paddingLeft:100
+  },
+  buttonGraphText:{
+    fontSize: 16,
+    fontWeight: 'bold',
+    alignContent:'center',
+    justifyContent:'center',
+    paddingLeft:100,
+    color: '#fff',
   },
   avatarContainer: {
     marginRight: 10, // Adiciona margem à direita para espaçamento entre o avatar e o conteúdo do post
     justifyContent: 'center', // Centraliza o conteúdo verticalmente
+  },
+  universeGraph:{
+    backgroundColor: '#4CAF50', // Cor de fundo do botão
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
   },
   content: {},
 });
