@@ -1,45 +1,45 @@
 import React, { useState } from 'react';
-import { View, Text, Button, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Button, FlatList, StyleSheet, Switch, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import ZoomableFeed from './ZoomableFeed';
 
-const FeedScreen = ({ navigation }) => {
-  const [posts, setPosts] = useState([
-    { id: 1, userName: 'Vivian', content: 'Eu estou tão cansada :(', avatar: require('../assets/vivian.jpg') },
-    { id: 2, userName: 'Isa', content: 'O mecanismo de defesa é uma coisa que não deixa evoluir a auto estima da pessoa se ele for sempre usado', avatar: require('../assets/isa.jpg') },
-    { id: 3, userName: 'Charles', content: 'IA e a bolha financeira dos devs', avatar: require('../assets/charles.jpg') },
-    { id: 4, userName: 'Thomaz', content: 'eu vou fazer um programa chamado piaba tank EAHUHAEUHAEU', avatar: require('../assets/thomaz.jpg') },
-    { id: 5, userName: 'Daniel', content: 'Hoje eu ralei pra caramba', avatar: require('../assets/daniel.jpg') },
-    { id: 6, userName: 'Maria', content: 'Dia de sustentação oral do cliente em monte carmelo', avatar: require('../assets/maria.jpg') },
-    { id: 7, userName: 'Igor', content: 'To desenvolvendo essa bagaça aqui :|', avatar: require('../assets/igor.jpg') },
-
-  ]);
-
-  const renderItem = ({ item }) => (
-    <View style={styles.post}>
-      <View style={styles.userInfo}>
-      <View style={styles.avatarContainer}>
-        <Image source={item.avatar} style={styles.avatar} />
-      </View>
-        <Text style={styles.userName}>{item.userName}</Text>
-      </View>
-      <Text style={styles.content}>{item.content}</Text>
+const PostCard = ({ title, content }) => {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.content}>{content}</Text>
     </View>
   );
+};
 
-  const handlePostPress = () => {
-    navigation.navigate('Post');
+const FeedScreen = () => {
+  const [showZoomableFeed, setShowZoomableFeed] = useState(false);
+
+  const toggleZoomableFeed = () => {
+    setShowZoomableFeed(!showZoomableFeed);
   };
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={posts}
-        renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
-        contentContainerStyle={{ paddingBottom: 16 }}
-      />
-      <TouchableOpacity style={styles.newPostButton} onPress={handlePostPress}>
-          <Text style={styles.buttonText}>Nova Postagem</Text>
-      </TouchableOpacity>
+      <StatusBar style="auto" />
+      <View style={styles.switchContainer}>
+        <Text style={styles.switchLabel}>Mostrar com Zoom</Text>
+        <Switch
+          value={showZoomableFeed}
+          onValueChange={toggleZoomableFeed}
+        />
+      </View>
+      {showZoomableFeed ? (
+        <ZoomableFeed /> // Renderiza o ZoomableFeed se showZoomableFeed for verdadeiro
+      ) : (
+        <ScrollView contentContainerStyle={styles.feed}>
+          {/* Renderiza as postagens normais */}
+          <PostCard title="Postagem 1" content="Conteúdo da postagem 1" />
+          <PostCard title="Postagem 2" content="Conteúdo da postagem 2" />
+          <PostCard title="Postagem 3" content="Conteúdo da postagem 3" />
+          {/* Adicione mais postagens aqui, se necessário */}
+        </ScrollView>
+      )}
     </View>
   );
 };
@@ -47,51 +47,34 @@ const FeedScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#333'
+    backgroundColor: '#f0f0f0',
   },
-  post: {
-    marginBottom: 16,
-    backgroundColor: '#aaa',
-    padding: 16, // Cor de fundo do componente de postagem
-    marginBottom: 10, // Adiciona margem inferior ao componente de postagem
-    width: '100%',
-    borderWidth: 5,
-    borderRadius: 8,
-    borderColor: '#ccc',
-  },
-  userInfo: {
+  switchContainer: {
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
-     // Adiciona borda ao redor do componente de postagem // Cor da borda
+    padding: 10,
   },
-  avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 8,
-    alignContent: 'center',
-    alignItems:'center',
-    paddingLeft:50
-  },
-  userName: {
-    fontWeight: 'bold',
-  },
-  newPostButton: {
-    backgroundColor: '#007BFF', // Cor de fundo do botão
-    borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  buttonText: {
+  switchLabel: {
+    marginRight: 10,
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff', // Cor do texto do botão
   },
-  avatarContainer: {
-    marginRight: 10, // Adiciona margem à direita para espaçamento entre o avatar e o conteúdo do post
-    justifyContent: 'center', // Centraliza o conteúdo verticalmente
+  feed: {
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  card: {
+    width: 200,
+    height: 100,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
+    marginVertical: 10,
+    elevation: 5,
+  },
+  title: {
+    fontWeight: 'bold',
+    marginBottom: 5,
   },
   content: {},
 });

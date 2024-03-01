@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FeedScreen from './screens/FeedScreen';
 import SplashScreen from './screens/SplashScreen';
 import PostScreen from './screens/PostScreen';
+import ZoomableFeed from './screens/ZoomableFeed'
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ const App = () => {
               <Stack.Screen name="Splash" component={SplashScreen} />
               <Stack.Screen name="Feed" component={FeedScreen} />
               <Stack.Screen name="Post" component={PostScreen} /> 
+              <Stack.Screen name="ZoomableFeed" component={ZoomableFeed} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
