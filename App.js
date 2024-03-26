@@ -13,7 +13,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={"Splash" } headerMode="none">
+        <Stack.Navigator initialRouteName={"Splash" } screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Splash" component={SplashScreen} />
               <Stack.Screen name="Feed" component={FeedScreen} />
               <Stack.Screen name="Post" component={PostScreen} /> 
